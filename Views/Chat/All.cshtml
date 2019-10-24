@@ -1,0 +1,15 @@
+﻿@model List<ChatViewModel>
+
+@{
+    ViewBag.Title = "Chat List";
+    Layout = "_Layout";
+}
+
+<div class="messageWrapper responsivePadding">
+    <div class="recievedMessages">
+        @foreach (ChatViewModel thisMessage in Model.OrderByDescending(m => m.LastMessage))
+        {
+        <partial name="preview" model="thisMessage" />
+        }
+    </div>
+</div>

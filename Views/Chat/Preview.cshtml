@@ -1,0 +1,15 @@
+﻿@model ChatViewModel
+
+<div class="messagePreview">
+    <a href="/Chat/ViewChat/@Model.Session.Guid">
+        <div class="users">
+            @string.Join(", ", Model.Users)
+        </div>
+        <div class="dateCreated">
+            @Model.LastMessageTime
+        </div>
+        <div class="messageBody">
+            @Model.LastMessage
+        </div>
+    </a>
+</div>

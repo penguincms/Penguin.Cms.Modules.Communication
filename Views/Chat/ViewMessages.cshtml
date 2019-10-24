@@ -1,0 +1,12 @@
+﻿@model List<ChatMessage>
+
+@{
+	ViewBag.Title = "View Chat";
+	Layout = null;
+
+}
+
+@foreach (ChatMessage message in Model)
+{
+<partial name="ViewMessage" model="message" />
+}

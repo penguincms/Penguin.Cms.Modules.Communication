@@ -1,0 +1,26 @@
+﻿@model ChatViewModel
+
+@{
+    ViewBag.Title = $"View Chat - {string.Join(", ", Model.Users)}";
+    Layout = "_Layout";
+    int lastMessageId = 0;
+
+    if (Model.Messages.Any())
+    {
+        lastMessageId = Model.Messages.Last()._Id;
+    }
+
+}
+<div class="messageWrapper responsivePadding">
+    <h3>@string.Join(", ", Model.Users)</h3>
+    <div class="messageChain" data-lastmessageid="@lastMessageId" data-sessionid="@Model.Session.Guid">
+        @foreach (ChatMessage message in Model.Messages)
+        {
+        <partial name="ViewMessage" model="message" />
+        }
+    </div>
+    <form action="/Chat/SendMessage/@Model.Session.Guid" method="post" class="chatForm">
+        <input type="text" name="Contents" class="chatBar" />
+        <input type="submit" value="Submit" id="ChatSubmit" class="chatSubmit desktopOnly" />
+    </form>
+</div>
