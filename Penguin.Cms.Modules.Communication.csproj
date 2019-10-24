@@ -1,24 +1,22 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
-
+<Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <Nullable>enable</Nullable>
     <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
+    <PackageProjectUrl>https://github.com/penguincms/Penguin.Cms.Modules.Communication</PackageProjectUrl>
+    <Version>1.0.0</Version>
+    <Description>Not Available</Description>
   </PropertyGroup>
-
   <ItemGroup>
     <Content Remove="wwwroot\**\*" />
   </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Include="wwwroot\**\*" />
   </ItemGroup>
-
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
-
   <ItemGroup>
     <None Include="Views\Chat\All.cshtml" />
     <None Include="Views\Chat\Preview.cshtml" />
@@ -28,12 +26,10 @@
     <None Include="wwwroot\js\Chat.js" />
     <None Include="_ViewImports.cshtml" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="3.0.0" />
     <PackageReference Include="Penguin.Cms.Communication.Repositories" Version="1.0.0" />
     <PackageReference Include="Penguin.Cms.Web" Version="1.0.0" />
   </ItemGroup>
-
-
+  <Import Project="Penguin.Projects.Shared\Penguin.Projects.Shared.csproj" />
 </Project>
