@@ -10,6 +10,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="wwwroot\**\*" />
+    <PackageReference Include="Penguin.Cms.Communication.Repositories" Version="1.0.0-T9LXGUJ" />
+    <PackageReference Include="Penguin.Cms.Web" Version="1.0.0-T9LXGUJ" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="wwwroot\**\*" />
@@ -28,8 +30,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="3.0.0" />
-    <PackageReference Include="Penguin.Cms.Communication.Repositories" Version="1.0.0" />
-    <PackageReference Include="Penguin.Cms.Web" Version="1.0.0" />
   </ItemGroup>
   <Import Project="Penguin.Projects.Shared\Penguin.Projects.Shared.csproj" />
 </Project>
