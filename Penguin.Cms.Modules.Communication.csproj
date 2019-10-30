@@ -12,8 +12,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="wwwroot\**\*" />
-    <PackageReference Include="Penguin.Cms.Communication.Repositories" Version="1.0.1-T9M2XAX" />
-    <PackageReference Include="Penguin.Cms.Web" Version="1.0.1-T9M2XAX" />
+    <PackageReference Include="Penguin.Cms.Communication.Repositories" Version="1.0.1-T9M3AAF" />
+    <PackageReference Include="Penguin.Cms.Web" Version="1.0.1-T9M3AAF" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="wwwroot\**\*" />
