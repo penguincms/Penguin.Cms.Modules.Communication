@@ -15,7 +15,7 @@
     <Content Remove="wwwroot\**\*" />
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="3.1.1" />
     <PackageReference Include="Penguin.Cms.Communication.Repositories" Version="5.0.2-TAA4YFP" />
-    <PackageReference Include="Penguin.Cms.Web" Version="5.0.2-TAA4YFP" />
+    <PackageReference Include="Penguin.Cms.Web" Version="5.0.2-TAAG11Z" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="wwwroot\**\*" />
