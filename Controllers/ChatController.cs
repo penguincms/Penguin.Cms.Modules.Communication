@@ -1,18 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Penguin.Cms.Communication;
+using Penguin.Cms.Communication.Repositories;
 using Penguin.Cms.Modules.Communication.Models;
-using Penguin.Cms.Modules.Communication.Repositories;
 using Penguin.Persistence.Abstractions.Interfaces;
 using Penguin.Security.Abstractions.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 
 namespace Penguin.Cms.Modules.Communication.Controllers
 {
-    [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
     public class ChatController : Controller
     {
         protected ChatMessageRepository ChatMessageRepository { get; set; }
@@ -33,13 +31,13 @@ namespace Penguin.Cms.Modules.Communication.Controllers
 
         public ActionResult All()
         {
-            List<ChatViewModel> AllChats = new List<ChatViewModel>();
+            List<ChatViewModel> AllChats = new();
 
-            foreach (ChatSession thisSession in this.ChatSessionRepository.GetOpenChatsForUser())
+            foreach (ChatSession thisSession in ChatSessionRepository.GetOpenChatsForUser())
             {
-                ChatViewModel chatViewModel = new ChatViewModel(thisSession);
+                ChatViewModel chatViewModel = new(thisSession);
 
-                chatViewModel.Messages.AddRange(this.ChatMessageRepository.GetMessages(thisSession.Guid));
+                chatViewModel.Messages.AddRange(ChatMessageRepository.GetMessages(thisSession.Guid));
 
                 if (chatViewModel.Messages.Any())
                 {
@@ -47,27 +45,27 @@ namespace Penguin.Cms.Modules.Communication.Controllers
                 }
             }
 
-            return this.View(AllChats);
+            return View(AllChats);
         }
 
         public ActionResult Open(string Id)
         {
-            ChatSession existing = this.ChatSessionRepository.GetForUsers(this.UserSession.LoggedInUser.Guid, Guid.Parse(Id)) ?? throw new NullReferenceException($"Can not find ChatSession with Id {Id}");
+            ChatSession existing = ChatSessionRepository.GetForUsers(UserSession.LoggedInUser.Guid, Guid.Parse(Id)) ?? throw new NullReferenceException($"Can not find ChatSession with Id {Id}");
 
             if (existing is null)
             {
                 string cId = string.Empty;
 
-                using (IWriteContext context = this.ChatSessionRepository.WriteContext())
+                using (IWriteContext context = ChatSessionRepository.WriteContext())
                 {
-                    cId = this.ChatSessionRepository.OpenSession(this.UserSession.LoggedInUser.Guid, Guid.Parse(Id)).Guid.ToString();
+                    cId = ChatSessionRepository.OpenSession(UserSession.LoggedInUser.Guid, Guid.Parse(Id)).Guid.ToString();
                 }
 
-                return this.RedirectToAction(nameof(ViewChat), new { Id = cId, area = "" });
+                return RedirectToAction(nameof(ViewChat), new { Id = cId, area = "" });
             }
             else
             {
-                return this.RedirectToAction(nameof(ViewChat), new { Id = existing.Guid, area = "" });
+                return RedirectToAction(nameof(ViewChat), new { Id = existing.Guid, area = "" });
             }
         }
 
@@ -78,7 +76,7 @@ namespace Penguin.Cms.Modules.Communication.Controllers
 
             using (IWriteContext writeContext = ChatMessageRepository.WriteContext())
             {
-                ChatSession target = this.ChatSessionRepository.Find(Id);
+                ChatSession target = ChatSessionRepository.Find(Id);
 
                 if (target is null)
                 {
@@ -87,8 +85,8 @@ namespace Penguin.Cms.Modules.Communication.Controllers
 
                 if (!string.IsNullOrWhiteSpace(Contents))
                 {
-                    sent = this.ChatMessageRepository.SendMessageToChat(target, this.UserSession.LoggedInUser, Contents);
-                    return this.View("ViewMessage", sent);
+                    sent = ChatMessageRepository.SendMessageToChat(target, UserSession.LoggedInUser, Contents);
+                    return View("ViewMessage", sent);
                 }
             }
 
@@ -97,28 +95,20 @@ namespace Penguin.Cms.Modules.Communication.Controllers
 
         public ActionResult Update(string Id)
         {
-            if (Id is null)
-            {
-                throw new ArgumentNullException(nameof(Id));
-            }
-
-            if (Id.Contains('-', StringComparison.Ordinal))
-            {
-                return this.View("ViewMessages", this.ChatMessageRepository.GetMessagesFor(Guid.Parse(Id)));
-            }
-            else
-            {
-                return this.View("ViewMessages", this.ChatMessageRepository.GetMessagesAfter(int.Parse(Id, NumberStyles.Integer, CultureInfo.CurrentCulture)));
-            }
+            return Id is null
+                ? throw new ArgumentNullException(nameof(Id))
+                : Id.Contains('-', StringComparison.Ordinal)
+                ? View("ViewMessages", ChatMessageRepository.GetMessagesFor(Guid.Parse(Id)))
+                : (ActionResult)View("ViewMessages", ChatMessageRepository.GetMessagesAfter(int.Parse(Id, NumberStyles.Integer, CultureInfo.CurrentCulture)));
         }
 
         public ActionResult ViewChat(string Id)
         {
-            ChatViewModel chatViewModel = new ChatViewModel(this.ChatSessionRepository.Find(Guid.Parse(Id)));
+            ChatViewModel chatViewModel = new(ChatSessionRepository.Find(Guid.Parse(Id)));
 
-            chatViewModel.Messages.AddRange(this.ChatMessageRepository.GetMessages(chatViewModel.Session.Guid));
+            chatViewModel.Messages.AddRange(ChatMessageRepository.GetMessages(chatViewModel.Session.Guid));
 
-            return this.View(chatViewModel);
+            return View(chatViewModel);
         }
     }
 }
