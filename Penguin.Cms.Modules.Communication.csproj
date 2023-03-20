@@ -4,7 +4,7 @@
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <Nullable>enable</Nullable>
     <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
-    <PackageProjectUrl>https://github.com/PenguinCms/Penguin.Cms.Modules.Communication</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/PenguinCMS/Penguin.Cms.Modules.Communication</PackageProjectUrl>
     <Version>5.0.5</Version>
     <Description>Not Available</Description>
     <AssemblyName>Penguin.Cms.Modules.Communication</AssemblyName>
@@ -15,8 +15,8 @@
   <ItemGroup>
     <Content Remove="wwwroot\**\*" />
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="3.1.1" />
-    <PackageReference Include="Penguin.Cms.Communication.Repositories" Version="5.0.6-TB7ZBM0" />
-    <PackageReference Include="Penguin.Cms.Web" Version="5.0.6-TB7ZBM0" />
+    <PackageReference Include="Penguin.Cms.Communication.Repositories" Version="5.2.0" />
+    <PackageReference Include="Penguin.Cms.Web" Version="5.2.0" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="wwwroot\**\*" />
